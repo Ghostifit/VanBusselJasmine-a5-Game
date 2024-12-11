@@ -1,0 +1,189 @@
+[gd_scene load_steps=11 format=3 uid="uid://bpxusalb8vjlm"]
+
+[ext_resource type="Script" path="res://addons/2d_shapes/shapes/Ellipse.gd" id="1_crow8"]
+[ext_resource type="Script" path="res://Ball/KeepUp.cs" id="1_hwb8i"]
+[ext_resource type="Script" path="res://addons/2d_shapes/shapes/Rectangle.gd" id="2_iot7h"]
+[ext_resource type="Script" path="res://Ball/Ball.cs" id="2_ncvmt"]
+[ext_resource type="Script" path="res://Scenes/Ball.cs" id="3_jxms2"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_qg6bc"]
+friction = 0.5
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8h8bw"]
+radius = 25.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k8fux"]
+size = Vector2(100, 872.017)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w3j85"]
+size = Vector2(75, 75)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hxf48"]
+size = Vector2(150, 20)
+
+[node name="Keep Up" type="Node2D"]
+position = Vector2(2, -2)
+script = ExtResource("1_hwb8i")
+
+[node name="Ball" type="Node2D" parent="."]
+position = Vector2(286, 514)
+scale = Vector2(0.5, 0.5)
+script = ExtResource("2_ncvmt")
+
+[node name="Ball" type="RigidBody2D" parent="Ball"]
+physics_material_override = SubResource("PhysicsMaterial_qg6bc")
+gravity_scale = 1.5
+script = ExtResource("3_jxms2")
+
+[node name="Ellipse" type="Node2D" parent="Ball/Ball"]
+script = ExtResource("1_crow8")
+size = Vector2(50, 50)
+fill_color = Color(0, 0.15, 1, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ball/Ball"]
+shape = SubResource("CircleShape2D_8h8bw")
+
+[node name="Walls" type="Node2D" parent="."]
+position = Vector2(-26.2952, 397.014)
+rotation = -0.00413792
+scale = Vector2(1, 1)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Walls"]
+position = Vector2(743.01, -412.943)
+rotation = 1.58355
+scale = Vector2(0.917998, 1)
+
+[node name="Rectangle" type="Node2D" parent="Walls/StaticBody2D"]
+position = Vector2(-3.70066, 410.988)
+rotation = -0.000983533
+script = ExtResource("2_iot7h")
+size = Vector2(100, 870.161)
+corner_radius = 1.0
+fill_color = Color(0.104, 0, 0.16, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/StaticBody2D"]
+position = Vector2(-2, 412.009)
+scale = Vector2(1, 1)
+shape = SubResource("RectangleShape2D_k8fux")
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="Walls"]
+position = Vector2(620.941, -396.447)
+scale = Vector2(0.999999, 0.999999)
+
+[node name="Rectangle" type="Node2D" parent="Walls/StaticBody2D2"]
+position = Vector2(24.3198, 406.104)
+rotation = -0.000983533
+script = ExtResource("2_iot7h")
+size = Vector2(100, 873.311)
+corner_radius = 1.0
+fill_color = Color(0.104, 0, 0.16, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/StaticBody2D2"]
+position = Vector2(25.3239, 405.108)
+scale = Vector2(1, 1)
+shape = SubResource("RectangleShape2D_k8fux")
+
+[node name="StaticBody2D3" type="StaticBody2D" parent="Walls/StaticBody2D2"]
+position = Vector2(-618.941, -15.5613)
+scale = Vector2(1, 1)
+
+[node name="Rectangle" type="Node2D" parent="Walls/StaticBody2D2/StaticBody2D3"]
+position = Vector2(-3.70066, 410.988)
+rotation = -0.000983533
+script = ExtResource("2_iot7h")
+size = Vector2(100, 870.161)
+corner_radius = 1.0
+fill_color = Color(0.104, 0, 0.16, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/StaticBody2D2/StaticBody2D3"]
+position = Vector2(-2, 412.009)
+scale = Vector2(1, 1)
+shape = SubResource("RectangleShape2D_k8fux")
+
+[node name="Obstacles" type="Node2D" parent="."]
+position = Vector2(6, 58)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Obstacles"]
+position = Vector2(-30, 496)
+rotation = -0.291952
+
+[node name="Rectangle" type="Node2D" parent="Obstacles/StaticBody2D"]
+position = Vector2(141, 106)
+script = ExtResource("2_iot7h")
+size = Vector2(75, 75)
+fill_color = Color(0.64, 0, 0.0106665, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Obstacles/StaticBody2D"]
+position = Vector2(141, 106)
+shape = SubResource("RectangleShape2D_w3j85")
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="Obstacles"]
+position = Vector2(298, 315)
+rotation = -0.291952
+
+[node name="Rectangle" type="Node2D" parent="Obstacles/StaticBody2D2"]
+position = Vector2(141, 106)
+script = ExtResource("2_iot7h")
+size = Vector2(75, 75)
+fill_color = Color(0.64, 0, 0.0106665, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Obstacles/StaticBody2D2"]
+position = Vector2(141, 106)
+shape = SubResource("RectangleShape2D_w3j85")
+
+[node name="StaticBody2D3" type="StaticBody2D" parent="Obstacles"]
+position = Vector2(-62, 238)
+rotation = -0.291952
+
+[node name="Rectangle" type="Node2D" parent="Obstacles/StaticBody2D3"]
+position = Vector2(141, 106)
+script = ExtResource("2_iot7h")
+size = Vector2(75, 75)
+fill_color = Color(0.64, 0, 0.0106665, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Obstacles/StaticBody2D3"]
+position = Vector2(141, 106)
+shape = SubResource("RectangleShape2D_w3j85")
+
+[node name="StaticBody2D4" type="StaticBody2D" parent="Obstacles"]
+position = Vector2(169, 86)
+rotation = -0.291952
+
+[node name="Rectangle" type="Node2D" parent="Obstacles/StaticBody2D4"]
+position = Vector2(141, 106)
+script = ExtResource("2_iot7h")
+size = Vector2(75, 75)
+fill_color = Color(0.64, 0, 0.0106665, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Obstacles/StaticBody2D4"]
+position = Vector2(141, 106)
+shape = SubResource("RectangleShape2D_w3j85")
+
+[node name="StaticBody2D5" type="StaticBody2D" parent="Obstacles"]
+position = Vector2(272, 534)
+rotation = -0.291952
+
+[node name="Rectangle" type="Node2D" parent="Obstacles/StaticBody2D5"]
+position = Vector2(141, 106)
+script = ExtResource("2_iot7h")
+size = Vector2(75, 75)
+fill_color = Color(0.64, 0, 0.0106665, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Obstacles/StaticBody2D5"]
+position = Vector2(141, 106)
+shape = SubResource("RectangleShape2D_w3j85")
+
+[node name="Paddle" type="Node2D" parent="."]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Paddle"]
+position = Vector2(-2, 66)
+
+[node name="Rectangle" type="Node2D" parent="Paddle/StaticBody2D"]
+position = Vector2(290, 694)
+script = ExtResource("2_iot7h")
+size = Vector2(150, 20)
+fill_color = Color(0.0253333, 0.76, 0, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Paddle/StaticBody2D"]
+position = Vector2(289, 694)
+shape = SubResource("RectangleShape2D_hxf48")
