@@ -1,13 +1,14 @@
-[gd_scene load_steps=11 format=3 uid="uid://bpxusalb8vjlm"]
+[gd_scene load_steps=13 format=3 uid="uid://bpxusalb8vjlm"]
 
 [ext_resource type="Script" path="res://addons/2d_shapes/shapes/Ellipse.gd" id="1_crow8"]
-[ext_resource type="Script" path="res://Ball/KeepUp.cs" id="1_hwb8i"]
 [ext_resource type="Script" path="res://addons/2d_shapes/shapes/Rectangle.gd" id="2_iot7h"]
-[ext_resource type="Script" path="res://Ball/Ball.cs" id="2_ncvmt"]
 [ext_resource type="Script" path="res://Scenes/Ball.cs" id="3_jxms2"]
+[ext_resource type="Script" path="res://Paddle.cs" id="6_mkjtf"]
+[ext_resource type="Script" path="res://Scenes/StaticBody2d.cs" id="6_rqrut"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_qg6bc"]
 friction = 0.5
+bounce = 2.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8h8bw"]
 radius = 25.0
@@ -21,18 +22,27 @@ size = Vector2(75, 75)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hxf48"]
 size = Vector2(150, 20)
 
+[sub_resource type="LabelSettings" id="LabelSettings_5b5ti"]
+font_size = 25
+
+[sub_resource type="LabelSettings" id="LabelSettings_xhjof"]
+font_size = 25
+
 [node name="Keep Up" type="Node2D"]
 position = Vector2(2, -2)
-script = ExtResource("1_hwb8i")
+
+[node name="Death zone" type="Node2D" parent="."]
+position = Vector2(288, 760)
+
+[node name="Area2D" type="Area2D" parent="Death zone"]
 
 [node name="Ball" type="Node2D" parent="."]
 position = Vector2(286, 514)
 scale = Vector2(0.5, 0.5)
-script = ExtResource("2_ncvmt")
 
 [node name="Ball" type="RigidBody2D" parent="Ball"]
 physics_material_override = SubResource("PhysicsMaterial_qg6bc")
-gravity_scale = 1.5
+gravity_scale = 2.0
 script = ExtResource("3_jxms2")
 
 [node name="Ellipse" type="Node2D" parent="Ball/Ball"]
@@ -174,9 +184,11 @@ position = Vector2(141, 106)
 shape = SubResource("RectangleShape2D_w3j85")
 
 [node name="Paddle" type="Node2D" parent="."]
+script = ExtResource("6_mkjtf")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Paddle"]
 position = Vector2(-2, 66)
+script = ExtResource("6_rqrut")
 
 [node name="Rectangle" type="Node2D" parent="Paddle/StaticBody2D"]
 position = Vector2(290, 694)
@@ -187,3 +199,35 @@ fill_color = Color(0.0253333, 0.76, 0, 1)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Paddle/StaticBody2D"]
 position = Vector2(289, 694)
 shape = SubResource("RectangleShape2D_hxf48")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Score Counter" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="CanvasLayer/Score Counter"]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 24.0
+offset_right = 112.0
+offset_bottom = 59.0
+text = "Score: "
+label_settings = SubResource("LabelSettings_5b5ti")
+
+[node name="Lives Counter" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="CanvasLayer/Lives Counter"]
+layout_mode = 0
+offset_left = 34.0
+offset_top = 63.0
+offset_right = 101.0
+offset_bottom = 98.0
+text = "Lives:"
+label_settings = SubResource("LabelSettings_xhjof")

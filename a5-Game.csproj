@@ -6,4 +6,7 @@
     <EnableDynamicLoading>true</EnableDynamicLoading>
     <RootNamespace>a5Game</RootNamespace>
   </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="Scenes\" />
+  </ItemGroup>
 </Project>
