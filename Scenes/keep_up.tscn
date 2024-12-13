@@ -1,11 +1,9 @@
-[gd_scene load_steps=14 format=3 uid="uid://bpxusalb8vjlm"]
+[gd_scene load_steps=12 format=3 uid="uid://bpxusalb8vjlm"]
 
 [ext_resource type="Script" path="res://addons/2d_shapes/shapes/Ellipse.gd" id="1_crow8"]
-[ext_resource type="Script" path="res://Ball/KeepUp.cs" id="1_hwb8i"]
 [ext_resource type="Script" path="res://addons/2d_shapes/shapes/Rectangle.gd" id="2_iot7h"]
 [ext_resource type="Script" path="res://Scenes/Ball.cs" id="3_jxms2"]
-[ext_resource type="Script" path="res://Paddle.cs" id="6_mkjtf"]
-[ext_resource type="Script" path="res://Scenes/StaticBody2d.cs" id="6_rqrut"]
+[ext_resource type="Script" path="res://Scenes/Paddle.cs" id="6_mkjtf"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_qg6bc"]
 friction = 0.5
@@ -31,7 +29,6 @@ font_size = 25
 
 [node name="Keep Up" type="Node2D"]
 position = Vector2(2, -2)
-script = ExtResource("1_hwb8i")
 
 [node name="Death zone" type="Node2D" parent="."]
 position = Vector2(288, 760)
@@ -42,10 +39,13 @@ position = Vector2(288, 760)
 position = Vector2(286, 514)
 scale = Vector2(0.5, 0.5)
 
-[node name="Ball" type="RigidBody2D" parent="Ball"]
+[node name="Ball" type="RigidBody2D" parent="Ball" node_paths=PackedStringArray("ScoreLabel")]
 physics_material_override = SubResource("PhysicsMaterial_qg6bc")
 gravity_scale = 2.0
+contact_monitor = true
+max_contacts_reported = 5
 script = ExtResource("3_jxms2")
+ScoreLabel = NodePath("../../CanvasLayer/ScoreCounter/ScoreLabel")
 
 [node name="Ellipse" type="Node2D" parent="Ball/Ball"]
 script = ExtResource("1_crow8")
@@ -58,7 +58,6 @@ shape = SubResource("CircleShape2D_8h8bw")
 [node name="Walls" type="Node2D" parent="."]
 position = Vector2(-26.2952, 397.014)
 rotation = -0.00413792
-scale = Vector2(1, 1)
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Walls"]
 position = Vector2(743.01, -412.943)
@@ -75,7 +74,6 @@ fill_color = Color(0.104, 0, 0.16, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/StaticBody2D"]
 position = Vector2(-2, 412.009)
-scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_k8fux")
 
 [node name="StaticBody2D2" type="StaticBody2D" parent="Walls"]
@@ -92,12 +90,10 @@ fill_color = Color(0.104, 0, 0.16, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/StaticBody2D2"]
 position = Vector2(25.3239, 405.108)
-scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_k8fux")
 
 [node name="StaticBody2D3" type="StaticBody2D" parent="Walls/StaticBody2D2"]
 position = Vector2(-618.941, -15.5613)
-scale = Vector2(1, 1)
 
 [node name="Rectangle" type="Node2D" parent="Walls/StaticBody2D2/StaticBody2D3"]
 position = Vector2(-3.70066, 410.988)
@@ -109,7 +105,6 @@ fill_color = Color(0.104, 0, 0.16, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/StaticBody2D2/StaticBody2D3"]
 position = Vector2(-2, 412.009)
-scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_k8fux")
 
 [node name="Obstacles" type="Node2D" parent="."]
@@ -186,32 +181,31 @@ position = Vector2(141, 106)
 shape = SubResource("RectangleShape2D_w3j85")
 
 [node name="Paddle" type="Node2D" parent="."]
+
+[node name="AnimatableBody2D" type="AnimatableBody2D" parent="Paddle"]
 script = ExtResource("6_mkjtf")
+PaddleSpeed = 400.0
 
-[node name="StaticBody2D" type="StaticBody2D" parent="Paddle"]
-position = Vector2(-2, 66)
-script = ExtResource("6_rqrut")
-
-[node name="Rectangle" type="Node2D" parent="Paddle/StaticBody2D"]
-position = Vector2(289.038, 694.287)
+[node name="Rectangle" type="Node2D" parent="Paddle/AnimatableBody2D"]
+position = Vector2(287.038, 760.287)
 script = ExtResource("2_iot7h")
 size = Vector2(149.776, 20.0554)
 corner_radius = 10.0277
 fill_color = Color(0.217, 0.62, 0, 1)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Paddle/StaticBody2D"]
-position = Vector2(289, 694)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Paddle/AnimatableBody2D"]
+position = Vector2(287, 760)
 shape = SubResource("RectangleShape2D_hxf48")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="Score Counter" type="Control" parent="CanvasLayer"]
+[node name="ScoreCounter" type="Control" parent="CanvasLayer"]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="Label" type="Label" parent="CanvasLayer/Score Counter"]
+[node name="ScoreLabel" type="Label" parent="CanvasLayer/ScoreCounter"]
 layout_mode = 0
 offset_left = 32.0
 offset_top = 24.0
@@ -228,9 +222,9 @@ offset_bottom = 40.0
 
 [node name="Label" type="Label" parent="CanvasLayer/Lives Counter"]
 layout_mode = 0
-offset_left = 24.0
-offset_top = 64.0
-offset_right = 91.0
-offset_bottom = 99.0
+offset_left = 38.0
+offset_top = 56.0
+offset_right = 105.0
+offset_bottom = 91.0
 text = "Lives:"
 label_settings = SubResource("LabelSettings_xhjof")
