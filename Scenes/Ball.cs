@@ -19,7 +19,7 @@ public partial class Ball : RigidBody2D
             /*
             GD.Print(body);
             */
-            score += 10;
+            score += 1;
             GD.Print(score);
             ScoreLabel.Text = $"Score: {score}";
            
